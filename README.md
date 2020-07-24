@@ -193,11 +193,11 @@ get (remote read):
 * **strided many put:** The most complex pattern: strided but with blocks
                    larger than a single unit. Pattern is a block of data,
                    followed by a gap of the same size, repeated:
-~~~~		   
+  ~~~~		   
                    do i = 1, count
                      x(1+2*(i-1)*blksize:(2*i-1)*blksize)[image2] = &
                      x(1+2*(i-1)*blksize:(2*i-1)*blksize)
-~~~~
+  ~~~~
   This pattern is a useful measurement in cases where the compiler
   vectorises **many put** into a single put of size ndata.
 
