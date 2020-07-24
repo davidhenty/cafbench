@@ -198,9 +198,9 @@ get (remote read):
                      x(1+2*(i-1)*blksize:(2*i-1)*blksize)[image2] = &
                      x(1+2*(i-1)*blksize:(2*i-1)*blksize)
 ~~~~
-                   This pattern is a useful measurement in cases where the
-                   compiler vectorises **many put** into a single put of
-                   size ndata.
+
+This pattern is a useful measurement in cases where the compiler
+vectorises **many put** into a single put of size ndata.
 
 * **MPI Send:** A regular MPI ping-pong with no coarray synchronisation, done as
            a sanity check for the coarray performance numbers.
