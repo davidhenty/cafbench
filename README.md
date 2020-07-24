@@ -99,7 +99,7 @@ syncbench and halobench in cafparams.f90.
 Point-to-point notes
 --------------------
 
-** Currently there is no way easily to select which of the
+**Currently there is no way easily to select which of the
 point-to-point benchmarks are executed: either they are all executed
 or none at all. However, it is straightforward to edit
 cafpt2ptdriver.f90 only to run selected cases if required.**
