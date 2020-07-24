@@ -1,3 +1,4 @@
+~~~~
 !----------------------------------------------------------------------------!
 !                                                                            !
 !  Fortran Coarray Micro-Benchmark Suite - Version 1.0                       !
@@ -19,7 +20,7 @@
 !  limitations under the License.                                            !
 !                                                                            !
 !----------------------------------------------------------------------------!
-
+~~~~
 License
 -------
 
@@ -50,11 +51,11 @@ patterns and halo-swapping for 3D arrays.
 Installation
 ------------
 
-  o Unpack the tar file.
+o Unpack the tar file.
 
-  o Select the required benchmarks by editing "cafparams.f90".
+o Select the required benchmarks by editing "cafparams.f90".
 
-  o Compile using "make".
+o Compile using "make".
 
 The supplied Makefile is configured for the Cray compiler - you will
 have to set "FC", "FFLAGS". "LDFLAGS" and "LIBS" appropriately for a
@@ -81,13 +82,13 @@ Benchmarks
 
 The benchmark has three separate sections:
 
-  o Point-to-point reports the latency and bandwidth (including any
+o Point-to-point reports the latency and bandwidth (including any
     synchronisation overheads).
 
-  o Synchronisation reports the overhead by performing calculations with
+o Synchronisation reports the overhead by performing calculations with
     and without synchronisation and subtracting the two times.
 
-  o Halo reports the time and bandwidth for regular halo swapping in a
+o Halo reports the time and bandwidth for regular halo swapping in a
     3D pattern.
 
 In all cases the basic data types are double precision numbers.
@@ -209,34 +210,34 @@ Synchronisation notes
 
 The different synchronisation types are:
 
-  o sync all: a simple call to "sync all".
+o sync all: a simple call to "sync all".
 
-  o sync mpi barrier: MPI call for comparison with "sync all" above.
+o sync mpi barrier: MPI call for comparison with "sync all" above.
 
-  o sync images pairwise: each image calls "sync images" with a single
+o sync images pairwise: each image calls "sync images" with a single
     neighbour; images are paired up in the same pattern as for
     "Multiple ping-pong" above.
 
-  o sync images random: each images calls "sync images" with N
+o sync images random: each images calls "sync images" with N
     neighbours chosen randomly (to ensure that they all match up I
     actually set up a simple ring pattern then randomly permute). N is
     chosen as 2, 4, 6, ... syncmaxneigh, capped if this starts to
     exceed the total number of images. Default syncmaxneigh is 12.
 
-  o sync images ring: each image calls "sync images" with N neighbours
+o sync images ring: each image calls "sync images" with N neighbours
     paired as image +/- 1, image +/- 2 ...  image +/- syncmaxneigh/2
     with periodic boundary conditions.
 
-  o sync images 3d grid: each image calls "sync images" with 6
+o sync images 3d grid: each image calls "sync images" with 6
     neighbours which are chosen as the up and down neighbours in all
     directions in a 3D cartesian grid (with periodic boundaries). The
     dimensions of the 3D grid are selected via a call to MPI_Cart_dims
     (suitably reversed for Fortran indexing). This is precisely the
     synchronisation pattern used in the subsequent halo benchmark.
 
-  o sync lock: all images lock a variable on image 1.
+o sync lock: all images lock a variable on image 1.
 
-  o sync critical: all images execute a critical region.
+o sync critical: all images execute a critical region.
 
 Note that in all of these the time for some computation (a simple
 delay loop) is compared to the time for the computation plus
