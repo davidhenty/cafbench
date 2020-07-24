@@ -100,9 +100,9 @@ Point-to-point notes
 --------------------
 
 ** Currently there is no way easily to select which of the
-** point-to-point benchmarks are executed: either they are all
-** executed or none at all. However, it is straightforward to edit
-** cafpt2ptdriver.f90 only to run selected cases if required.
+point-to-point benchmarks are executed: either they are all executed
+or none at all. However, it is straightforward to edit
+cafpt2ptdriver.f90 only to run selected cases if required.**
 
 The point-to-point benchmarks use both remote read and remote write.
 
