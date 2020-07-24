@@ -131,66 +131,66 @@ images).
 
 Pingpongs are done in three ways:
 
-* "Single ping-pong" between images 1 and numimages. All other images are
-idle (except that they must call "sync all" for global synchronisation).
+* **Single ping-pong** between images 1 and numimages. All other images are
+idle (except that they must call **sync all** for global synchronisation).
 
-* "Multiple ping-pong" where _all_ images are active. Image "i" is paired
-with image "i+numimages/2"; note this only takes place for even numbers
+* **Multiple ping-pong** where _all_ images are active. Image **i** is paired
+with image **i+numimages/2**; note this only takes place for even numbers
 of images greater than 2. This can give significantly different
-bandwidths depending on the choice of synchronisation (see "crossing"
+bandwidths depending on the choice of synchronisation (see **crossing**
 below).
 
-* "Multiple crossing ping-pong" which is as above but every other pair
+* **Multiple crossing ping-pong** which is as above but every other pair
 swaps in the opposite direction, ie if image 1 is sending to
 1+numimages/2, then image 2 is receiving from 2+numimages/2. This
 ensures that we exploit the bidirectional bandwidth. Note that in
-practice this is the same as "mutiple" if you use point-to-point
+practice this is the same as **mutiple** if you use point-to-point
 synchronisation: in that case the pairs of images naturally get out of
 sync as they contend for bandwidth. However, for global synchronisation
-this realises a different pattern from "multiple". This test is really
-to explain any differences in "multiple" for different choices of
+this realises a different pattern from **multiple**. This test is really
+to explain any differences in **multiple** for different choices of
 synchronisation.
 
 
 The patterns are as follows - all except **MPI Send** are replicated for
 get (remote read):
 
-* **put**    Contiguous put done inline: x(1:ndata)[image2] = x(1:ndata)
+* **put:**    Contiguous put done inline: x(1:ndata)[image2] = x(1:ndata)
 
-* **subput** Contiguous put done via a subroutine with target = source = x and
+* **subput:** Contiguous put done via a subroutine with target = source = x and
          disp = 1, count = ndata, ie:
          target(disp:disp+count-1)[image] = source(disp:disp+count-1)
 
-* **simple subput**  As above but with simpler arguments to subroutine:
+* **simple subput:**  As above but with simpler arguments to subroutine:
                  target(:)[image] = source(:)
 
-* **all put** Arrays are allocated to be of size ndata and simple call is done
+* **all put:** Arrays are allocated to be of size ndata and simple call is done
           inline. This is like **simple subput** above except there the arrays
           are implicitly resized via a subroutine call. Code is:
           x(:)[image2] = x(:)
 
-* **many put**  A contiguous put done as many separate puts of different blksize:
+* **many put:**  A contiguous put done as many separate puts of different blksize:
             do i = 1, count
                x(1+(i-1)*blksize:i*blksize)[image2] = &
                x(1+(i-1)*blksize:i*blksize)
 
-* **sub manyput** Exactly as **many put** but done in a separate subroutine:
+* **sub manyput:** Exactly as **many put** but done in a separate subroutine:
               do i = 1, count
                 target(disp+(i-1)*blksize:disp+i*blksize-1)[image] = &
                 source(disp+(i-1)*blksize:disp+i*blksize-1)
 
-* **many subput** Same pattern but with many separate invocations of **subput**:
+* **many subput:** Same pattern but with many separate invocations of **subput**:
               do i = 1, count
                 call cafput(x, x, 1+(i-1)*blksize, blksize, image1)
 
-* **strided put** Strided data done inline in the code:
+* **strided put:** Strided data done inline in the code:
               x(1:nextent:stride)[image2] = x(1:nextent:stride)
 
-* **strided subput** As above but done via a subroutine:
+* **strided subput:** As above but done via a subroutine:
               target(istart:istop:stride)[image] = source(istart:istop:stride)
 
 
-* **strided many put** The most complex pattern: strided but with blocks
+* **strided many put:** The most complex pattern: strided but with blocks
                    larger than a single unit. Pattern is a block of data,
                    followed by a gap of the same size, repeated:
 ~~~~		   
@@ -202,7 +202,7 @@ get (remote read):
                    compiler vectorises **many put** into a single put of
                    size ndata.
 
-* **MPI Send** A regular MPI ping-pong with no coarray synchronisation, done as
+* **MPI Send:** A regular MPI ping-pong with no coarray synchronisation, done as
            a sanity check for the coarray performance numbers.
 
 
@@ -211,34 +211,34 @@ Synchronisation notes
 
 The different synchronisation types are:
 
-* sync all: a simple call to **sync all**.
+* **sync all:** a simple call to **sync all**.
 
-* sync mpi barrier: MPI call for comparison with **sync all** above.
+* **sync mpi barrier:** MPI call for comparison with **sync all** above.
 
-* sync images pairwise: each image calls **sync images** with a single
+* **sync images pairwise:** each image calls **sync images** with a single
     neighbour; images are paired up in the same pattern as for
     **Multiple ping-pong** above.
 
-* sync images random: each images calls **sync images** with N
+* **sync images random:** each images calls **sync images** with N
     neighbours chosen randomly (to ensure that they all match up I
     actually set up a simple ring pattern then randomly permute). N is
     chosen as 2, 4, 6, ... syncmaxneigh, capped if this starts to
     exceed the total number of images. Default syncmaxneigh is 12.
 
-* sync images ring: each image calls **sync images** with N neighbours
+* **sync images ring:** each image calls **sync images** with N neighbours
     paired as image +/- 1, image +/- 2 ...  image +/- syncmaxneigh/2
     with periodic boundary conditions.
 
-* sync images 3d grid: each image calls **sync images** with 6
+* **sync images 3d grid:** each image calls **sync images** with 6
     neighbours which are chosen as the up and down neighbours in all
     directions in a 3D cartesian grid (with periodic boundaries). The
     dimensions of the 3D grid are selected via a call to MPI_Cart_dims
     (suitably reversed for Fortran indexing). This is precisely the
     synchronisation pattern used in the subsequent halo benchmark.
 
-* sync lock: all images lock a variable on image 1.
+* **sync lock:** all images lock a variable on image 1.
 
-* sync critical: all images execute a critical region.
+* **sync critical:** all images execute a critical region.
 
 Note that in all of these the time for some computation (a simple
 delay loop) is compared to the time for the computation plus
