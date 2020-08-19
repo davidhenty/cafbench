@@ -258,7 +258,7 @@ subroutine stats (time, outerreps, meantime, sd, nr)
 
   mintime = time(1)
   maxtime = time(1)
-  totaltime = 0.0
+  totaltime = time(1)
 
   do i = 2, outerreps
 
