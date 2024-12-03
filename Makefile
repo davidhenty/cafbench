@@ -70,8 +70,8 @@ cafsyncdriver.o:	cafsync.o  cafcore.o cafparams.o
 cafhalodriver.o:	cafhalo.o  cafcore.o cafparams.o
 
 cafpt2pt.o:	cafcore.o cafclock.o cafparams.o
+cafhalo.o:	cafcore.o cafclock.o cafparams.o
 cafsync.o:	cafcore.o cafclock.o
-cafhalo.o:	cafcore.o cafclock.o
 
 cafcore.o:	cafclock.o
 
