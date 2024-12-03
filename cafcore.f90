@@ -428,6 +428,12 @@ contains
 
              if (i .lt. 1 .or. i .gt. size(x)) then
                 write(*,*) 'cafset: internal error, i = ', i
+                write(*,*) 'count, stride, blksize, value, docheck = ', &
+                     count, stride, blksize, value, docheck
+                write(*,*) 'size(x) = ', size(x)
+
+                error stop
+
              end if
 
              x(i) = value
@@ -495,6 +501,12 @@ contains
 
              if (i .lt. 1 .or. i .gt. size(x)) then
                 write(*,*) 'cafcheck: internal error, i = ', i
+                write(*,*) 'count, stride, blksize, value, docheck = ', &
+                     count, stride, blksize, value, docheck
+                write(*,*) 'size(x) = ', size(x)
+
+                error stop
+
              end if
 
              if (x(i) /= value) then
@@ -511,7 +523,13 @@ contains
           do i = (icount-1)*stride + blksize + 1, icount*stride
             
              if (i .lt. 1 .or. i .gt. size(x)) then
-                write(*,*) 'cafset: internal error, i = ', i
+                write(*,*) 'cafcheck: internal error, i = ', i
+                write(*,*) 'count, stride, blksize, value, docheck = ', &
+                     count, stride, blksize, value, docheck
+                write(*,*) 'size(x) = ', size(x)
+
+                error stop
+
              end if
 
              if (x(i) /= 0.0) then
