@@ -37,7 +37,7 @@ module cafparams
   logical, parameter :: syncbench = .true.
   logical, parameter :: halobench = .true.
 
-  logical, parameter :: printloc  = .false.
+  logical, parameter :: printloc  = .true.
 
 ! Individual configuration parameters for each of the three benchmarks
 ! --------------------------------------------------------------------
@@ -59,13 +59,14 @@ module cafparams
 ! p2ptargettime: minimum acceptable time (secs) for a test (code self-adjusts)
 !
 
-  logical, parameter :: p2pcheck = .false.
+  logical, parameter :: p2pcheck = .true.
 
-  logical, parameter :: p2psingle = .true.
-  logical, parameter :: p2pmulti  = .true.
+  logical, parameter :: p2psingle = .false.
+  logical, parameter :: p2pmulti  = .false.
   logical, parameter :: p2pcross  = .false.
 
-  integer, parameter :: p2pnmax      = 4*1024*1024
+!  integer, parameter :: p2pnmax      = 1*1024*1024
+  integer, parameter :: p2pnmax      = 64*1024
   integer, parameter :: p2pmaxstride = 128
 
   double precision, parameter :: p2ptargettime = 0.5
@@ -100,7 +101,7 @@ module cafparams
 ! halotargettime: minimum acceptable time for a test (the code self-adjusts)
 !
 
-  logical, parameter :: halocheck = .false.
+  logical, parameter :: halocheck = .true.
 
   integer, parameter            :: nhalosize = 4
   integer, dimension(nhalosize) :: halosize = [10, 50, 100, 150]
