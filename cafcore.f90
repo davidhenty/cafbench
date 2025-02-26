@@ -701,12 +701,20 @@ subroutine getdecomp3d(dims)
              dims = [  2,  2,  4 ]
   case(  32)
              dims = [  2,  4,  4 ]
+  case(  36)
+             dims = [  3,  3,  4 ]
   case(  64)
              dims = [  4,  4,  4 ]
+  case(  72)
+             dims = [  3,  4,  6 ]
   case( 128)
              dims = [  4,  4,  8 ]
+  case( 144)
+             dims = [  4,  6,  6 ]
   case( 256)
              dims = [  4,  8,  8 ]
+  case( 288)
+             dims = [  6,  6 , 8 ]
   case( 512)
              dims = [  8,  8,  8 ]
   case(1024)
